@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!--Created By The Fantastic Robert Bills!-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS Sheet-->
+    <title>Todo App JavaScript | Robert B.</title>
+    <link rel="stylesheet" href="todo.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1 class="app-title">Daily Tasklist</h1>
+            <ul class="todo-list js-todo-list"></ul>
+            <!-- add the empty state here -->
+            <div class="empty-state">
+                <svg class="checklist-icon">
+                    <use href="#checklist-icon"></use>
+                </svg>
+                <p class="empty-state__description" style="margin-top: 90px">What do you want to get done today?</p>
+            </div>
+            <!-- end -->
+            <form class="js-form">
+                <label for = "addTodo"> Task: </label>
+                <input autofocus type="text" aria-label="Enter a new todo item" placeholder="EX: Build a web app" class="js-todo-input">
+                <input id="taskPriority" placeholder="Place task priority"><br>
+                    <p>
+                    <button class="btn-task">Add Task</button>
+                    </p>
+                    
+                  <ul class="task"></ul>
+                  <button id="deletetodo">Delete finished tasks</button>
+            </form>
+
+        </div>
+    </div>
+    
+</body>
+<!-- Javascript File-->
+<script src="todoo.js"></script>
+</html>
+
