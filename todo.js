@@ -94,84 +94,127 @@ function resetColor() {
     }
   });
 
-  function removeCard(){
+  function removeCard() {
     var parent = this.parentElement;
     parent.classList.add('delete-card');
-    setTimeout(function(){
-        // console.log(this);
-        parent.parentNode.removeChild(parent);
-        updateTaskCount();
-        reassignIDs(); 
-        eventSetter();
+    setTimeout(function () {
+      // console.log(this);
+      parent.parentNode.removeChild(parent);
+      updateTaskCount();
+      reassignIDs();
+      eventSetter();
     }, 550)
-    task_count --;
+    task_count--;
 
-  function changeProgress(){
-    var parentCard = this.parentElement;
-    var status = parentCard.classList[1];
-    parentCard.classList.remove(status);
-    var statusElem = parentCard.children[2];
-
-    if(status == 'not-started'){
-      parentCard.classList.add('In-progress');
-      statusElem.innerHTML="In-progress";
-      statusElem.classList.remove(statusElem.classList[1]);
-      statusElem.classList.add('color-blue');
-
-    }
-    else if(status =='Completed'){
-      parentCard.classList.add('In-Progress');
-      statusElem.innerHTML="In-progress";
-      statusElem.classList.remove(statusElem.classList[1]);
-      status.classList.add('color-blue');
-    }
-
-    else{
-      parentCard.classList.add('Completed');
-      statusElem.innerHTML="Completed";
-      statusElem.classList.remove(statusElem.classList[1]);
-      statusElem.classList.add('color-green');
-
-    }
-  }
-
-  completeAll.addEventListener('click', function(){
-    var progress_buttons = documents.getElementsByClassName ('status-icon');
-    for (p of progress_buttons){
-      var parentCard = p.parentElement;
+    function changeProgress() {
+      var parentCard = this.parentElement;
       var status = parentCard.classList[1];
       parentCard.classList.remove(status);
       var statusElem = parentCard.children[2];
-      parentCard.classList.remove(status);
-      parentCard.classList.add("Completed");
-      statusElem.innerHTML="Completed";
-      statusElem.classList.remove(statusElem.classList[1]);
-      statusElem.classList.add('color-green');
 
+      if (status == 'not-started') {
+        parentCard.classList.add('In-progress');
+        statusElem.innerHTML = "In-progress";
+        statusElem.classList.remove(statusElem.classList[1]);
+        statusElem.classList.add('color-blue');
+
+      }
+      else if (status == 'Completed') {
+        parentCard.classList.add('In-Progress');
+        statusElem.innerHTML = "In-progress";
+        statusElem.classList.remove(statusElem.classList[1]);
+        status.classList.add('color-blue');
+      }
+
+      else {
+        parentCard.classList.add('Completed');
+        statusElem.innerHTML = "Completed";
+        statusElem.classList.remove(statusElem.classList[1]);
+        statusElem.classList.add('color-green');
+
+      }
+    }
+
+    completeAll.addEventListener('click', function () {
+      var progress_buttons = documents.getElementsByClassName('status-icon');
+      for (p of progress_buttons) {
+        var parentCard = p.parentElement;
+        var status = parentCard.classList[1];
+        parentCard.classList.remove(status);
+        var statusElem = parentCard.children[2];
+        parentCard.classList.remove(status);
+        parentCard.classList.add("Completed");
+        statusElem.innerHTML = "Completed";
+        statusElem.classList.remove(statusElem.classList[1]);
+        statusElem.classList.add('color-green');
+
+      }
+    });
+    clearComplete.addEventListener('click', function () {
+
+      let cards = document.getElementsByClassName('Completed');
+      let parent = cards[0].parentElement;
+      let length = cards.length;
+      let count = length - 1;
+
+      intervalID = setInterval(function(){
+        cards[count].classList.add('delete-card');
+        task_count--;
+        setTimeout(function () {
+          this.parentNode.removeChild(this);
+          updateTaskCount();
+
+        }.bind(cards[count]), 500)
+        count--;
+        if (count < 0) {
+          clearInterval(intervalID);
+        }
+      }, 500);
+
+    });
+    showAll.addEventListener('click', function () {
+      if (showState != 'showComplete') {
+        resetColor();
+        this.style.color = "black";
+        var allCards = document.getElementsByClassName('task-card');
+        for (card of allCards) {
+          if (card.classList[1] != 'Completed')
+            card.style.display = "none"
+          else
+            card.style.display = "flex";
+        }
+        showState = 'showComplete';
+      }
+    });
+
+  showInprogress.addEventListener('click', function () {
+    if (showState != 'showInprogress') {
+      resetColor();
+      this.style.color = "black";
+      var allCards = document.getElementsByClassName('task-card');
+      for (card of allCards) {
+        if (card.classList[1] != 'In-progress')
+          card.style.display = "none";
+        else
+          card.style.display = "flex";
+      }
+      showState = 'showInprogress';
     }
   });
-  clearComplete.addEventListener('click', function(){
+  showNotStarted.addEventListener('click', function () {
+    if (showState != 'showNotStarted') {
+      resetColor();
+      this.style.color = "black"
+      var allCards = document.getElementsByClassName('task-card');
+      for (card of allCards) {
+        if (card.classList[1] != 'not-started')
+          card.style.display = "none";
+        else
+          card.style.display = "flex";
 
-    let cards = document.getElementsByClassName('Completed');
-    let parent = cards[0].parentElement;
-    let length = cards.length;
-    let count=length-1;
-
-    intervalID = setInterval(function(){
-      cards[count].classList.add('delete-card');
-      task_count--;
-      setTimeout(function(){
-        this.parentNode.removeChild(this);
-        updateTaskCount();
-
-      }.bind(cards[count]),500)
-      count--;
-      if(count < 0){
-        clearInterval(intervalID);
       }
-    }, 500);
-
+      showState = 'showNotStarted';
+    }
   });
   }
 }
-
