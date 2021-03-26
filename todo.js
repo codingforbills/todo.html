@@ -25,13 +25,9 @@ function eventSetter() {
   for (del of del_buttons) {
     del.addEventListener('click', removeCard);
   }
-
   var progress_buttons = document.getElementsByClassName('status-icon');
-  {
-    for (p of progress_buttons) {
-      p.addEventListener('click', changeProgress);
-
-    }
+  for (p of progress_buttons) {
+    p.addEventListener('click', changeProgress);
   }
   var cards = document.getElementsByClassName('task-card');
   console.log(cards);
@@ -49,20 +45,20 @@ function eventSetter() {
 
 }
 
-function reassignIDs() {
+function reassignIDs(){
   var cards = document.getElementsByClassName('task-card');
-  var count = 1;
-  for (card of cards) {
-    card.setAttribute("id", "t" + (count++));
-    card.eve
+  var count=1;
+  for(card of cards){
+      card.setAttribute("id", "t"+(count++));
+      card.eve
   }
 }
 
-function resetColor() {
+function resetColor(){
   var allButtons = document.getElementsByClassName('filter-button');
-  for (button of allButtons) {
-    button.style.color = "gray";
-  }
+  for(button of allButtons)
+      button.style.color = "gray";
+}
 
   add.addEventListener('click', function () {
     var task_card = document.createElement('div');
@@ -151,26 +147,23 @@ function resetColor() {
       }
     });
     clearComplete.addEventListener('click', function () {
-
       let cards = document.getElementsByClassName('Completed');
       let parent = cards[0].parentElement;
       let length = cards.length;
       let count = length - 1;
-
-      intervalID = setInterval(function(){
+      
+      intervalID = setInterval(function () {
         cards[count].classList.add('delete-card');
         task_count--;
         setTimeout(function () {
           this.parentNode.removeChild(this);
           updateTaskCount();
-
         }.bind(cards[count]), 500)
         count--;
         if (count < 0) {
           clearInterval(intervalID);
         }
       }, 500);
-
     });
     showAll.addEventListener('click', function () {
       if (showState != 'showComplete') {
@@ -187,34 +180,34 @@ function resetColor() {
       }
     });
 
-  showInprogress.addEventListener('click', function () {
-    if (showState != 'showInprogress') {
-      resetColor();
-      this.style.color = "black";
-      var allCards = document.getElementsByClassName('task-card');
-      for (card of allCards) {
-        if (card.classList[1] != 'In-progress')
-          card.style.display = "none";
-        else
-          card.style.display = "flex";
+    showInprogress.addEventListener('click', function () {
+      if (showState != 'showInprogress') {
+        resetColor();
+        this.style.color = "black";
+        var allCards = document.getElementsByClassName('task-card');
+        for (card of allCards) {
+          if (card.classList[1] != 'In-progress')
+            card.style.display = "none";
+          else
+            card.style.display = "flex";
+        }
+        showState = 'showInprogress';
       }
-      showState = 'showInprogress';
-    }
-  });
-  showNotStarted.addEventListener('click', function () {
-    if (showState != 'showNotStarted') {
-      resetColor();
-      this.style.color = "black"
-      var allCards = document.getElementsByClassName('task-card');
-      for (card of allCards) {
-        if (card.classList[1] != 'not-started')
-          card.style.display = "none";
-        else
-          card.style.display = "flex";
+    });
+    showNotStarted.addEventListener('click', function () {
+      if (showState != 'showNotStarted') {
+        resetColor();
+        this.style.color = "black"
+        var allCards = document.getElementsByClassName('task-card');
+        for (card of allCards) {
+          if (card.classList[1] != 'not-started')
+            card.style.display = "none";
+          else
+            card.style.display = "flex";
 
+        }
+        showState = 'showNotStarted';
       }
-      showState = 'showNotStarted';
-    }
-  });
+    });
   }
-}
+
