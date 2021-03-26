@@ -1,46 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!--Created By The Fantastic Robert Bills!-->
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src> "https://kit.fontawesome.com/1935d064dd.js"</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- CSS Sheet-->
     <title>Todo App JavaScript | Robert B.</title>
+
     <link rel="stylesheet" href="todo.css">
+    <!--CSS sheet-->
+
+    <!--Bootstrap elements-->
+
+    <!--FontAwesome-->
+
 </head>
 
 <body>
-    <div class="container">
-        <div class="jumbotron text-center">
-            <h1 class="app-title">Daily Tasklist</h1>
-            <ul class="todo-list js-todo-list"></ul>
-            <!-- add the empty state here -->
-            <div class="empty-state">
-                <svg class="checklist-icon">
-                    <use href="#checklist-icon"></use>
-                </svg>
-                <p class="empty-state__description" style="margin-top: 90px">What do you want to get done today?</p>
-            </div>
-            <!-- end -->
-            <form class="js-form">
-                <label for = "addTodo"> Task: </label>
-                <input autofocus type="text" aria-label="Enter a new todo item" placeholder="EX: Build a web app" class="js-todo-input">
-                <input id="taskPriority" placeholder="Place task priority"><br>
-                    <p>
-                    <button class="btn-task">Add Task</button>
-                    </p>
-                    
-                  <ul class="task"></ul>
-                  <button id="deletetodo">Delete finished tasks</button>
-            </form>
-
+    <main class="container">
+        <div class="add-bar">
+            <i class="fas fa-clipboard-list mg-10 fs-large"></i>
+            <input type="text" id="new" placeholder="Add items...">
+            <ion-icon id="add-button" name="add-circle-outline" class="mg-10 fs-large"></ion-icon>
         </div>
-    </div>
-    
-</body>
-<!-- Javascript File-->
-<script src="todoo.js"></script>
-</html>
+        <div class="menu-bar">
+            <div id="check-all-button">
+                <ion-icon name="checkmate-outline"></ion-icon>
+                <p id="completeAll" class="fs-med"> Complete Tasks</p>
+            </div>
+            <p id="clearComplete" class="fs-med">Clear Completed</p>
+        </div>
+        <hr>
+        <div id="show-all" class="task-container">
+            <div class="task-card not-started" id="t1">
+                <div class="status-icon"></div>
+                <p class="task-text">Pick up items from store</p>
+                <p class="task-status color-red">Not-started</p>
+                <ion-icon class="delete fs-large mg-10" name="close-circle-outline"></ion-icon>
+            </div>
+            <div class="task-card not-started" id=t2>
+                <div class="status-icon"></div>
+                <p class="task-text">Call Mom.</p>
+                <p class="task-status color-red">Not-Started.</p>
+                <ion-icon class="delete fs-large mg-10" name="close-circle-outline"></ion-icon>
+            </div>
 
+            <div class="task-card Completed" id=t3>
+                <div class="status-icon"></div>
+                <p class="task-text">Create a To-Do list</p>
+                <p class="task-status color-red">Completed</p>
+                <ion-icon class="delete fs-large mg-10" name="close-circle-outline"></ion-icon>
+            </div>
+            <div class="task-card not-started" id=t4>
+                <div class="status-icon"></div>
+                <p class="task-text"> Upload video</p>
+                <p class="task-status color-red"> In-progress</p>
+                <ion-icon class="delete fs-large mg-10" name="close-circle-outline"></ion-icon>
+            </div>
+        </div>
+        <hr>
+        <div class="footer">
+            <div class="task-count">
+                <p id="task-left-count" class="fs-med bold">3</p>
+                <p class="fs-med"> tasks available</p>
+            </div>
+
+        <div class="filter">
+            <p id = 'showAll' class="filter-button">All</p>
+            <p id = 'showCompleted' class="filter-button">Completed</p>
+            <p id = 'showInProgress' class="filter-button">In Progress</p>
+            <p id = 'showNotStarted' class="filter-button">Not Started</p>
+        </div>
+        </div>
+
+        <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+        <script src="todo.js"></script>
+    </main>
+</body>
+
+</html>
