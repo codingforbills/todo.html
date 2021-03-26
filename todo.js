@@ -1,105 +1,95 @@
-const todoItems = []; //array of to-dos
+var add = document.getElementById('add-button');
+var del = document.getElementById('delete');
+var task_container = document.getElementById('.tasks-container');
+var task_input = document.getElementById('new-task');
+var complete = document.getElementById('check-all-button');
+var clear = document.getElementById('clearComplete');
+var showAll = document.getElementById('showAll');
+var showComplete = document.getElementById('showComplete');
+var showInprogress = document.getElementById('showInprogress');
+var showNotStarted = document.getElementById('showNotStarted');
+var showState = 'showAll';
+showAll.style.color = "Black";
 
+var task_card_string = "<div class=\"status-icon\"></div><p class=\"task-text\"><p class=\"task-status color-red\">Not-Started</p><ion-icon class=\"delete fs-large mg-10\" name=\"close-circle-outline\"></ion-icon>"
+var task_count = 5;
+updateTaskCount();
+eventSetter();
 
-function renderTodo(todo) {
-  localStorage.setItem('todoItems', JSON.stringify(todoItems));
+function updateTaskCount() {
+  document.getElementById('task-left-count').innerHTML = task_count;
+}
 
-  const list = document.querySelector('.js-todo-list');
-  const item = document.querySelector(`[data-key='${todo.id}']`);
-  
-  if (todo.deleted) {
-    item.remove();
-    if (todoItems.length === 0) list.innerHTML = '';
-    return
+function eventSetter() {
+  var del_buttons = document.getElementsByClassName('delete');
+  for (del of del_buttons) {
+    del.addEventListener('click', removeCard);
   }
 
-  const isChecked = todo.checked ? 'done': '';
-  const node = document.createElement("li");
-  node.setAttribute('class', `todo-item ${isChecked}`);
-  node.setAttribute('data-key', todo.id);
-  node.innerHTML = `
-    <input id="${todo.id}" type="checkbox"/>
-    <label for="${todo.id}" class="tick js-tick"></label>
-    <span>${todo.text}</span>
-    <button class="delete-todo js-delete-todo">
-    <svg><use href="#delete-icon"></use></svg>
-    </button>
-  `;
+  var progress_buttons = document.getElementsByClassName('status-icon');
+  {
+    for (p of progress_buttons) {
+      p.addEventListener('click', changeProgress);
 
-  if (item) {
-    list.replaceChild(node, item);
-  } else {
-    list.append(node);
+    }
+  }
+  var cards = document.getElementsByClassName('task-card');
+  console.log(cards);
+  for (let i = 0; i < cards.length; i++) {
+    console.log(cards[i]);
+    cards[i].addEventListener('mouseover', function () {
+      console.log(cards[i]);
+      cards[i].children[3].style.visibility = "initial";
+    })
+    cards[i].addEventListener('mouseleave', function () {
+      console.log(cards[i].children[3].style.visibility);
+      cards[i].children[3].style.visibility = "hidden";
+    })
+  }
+
+}
+
+function reassignIDs() {
+  var cards = document.getElementsByClassName('task-card');
+  var count = 1;
+  for (card of cards) {
+    card.setAttribute("id", "t" + (count++));
+    card.eve
   }
 }
 
-function addTodo(text) {
-  const todo = {
-    text,
-    checked: false,
-    id: Date.now(),
-  };
-
-  todoItems.push(todo);
-  renderTodo(todo);
-}
-
-function toggleDone(key) {
-  const index = todoItems.findIndex(item => item.id === Number(key));
-  todoItems[index].checked = !todoItems[index].checked;
-  renderTodo(todoItems[index]);
-}
-
-function deleteTodo(key) {
-  const index = todoItems.findIndex(item => item.id === Number(key));
-  const todo = {
-    deleted: true,
-    ...todoItems[index]
-  };
-
-function removeItemFromTodos (todo,list) {
-    const todoIndex = todo.findIndex = list.findIndex((todo) => todo.id ===itemId);
-    todoItems.splice(todoIndex,1)
-}
-
-  todoItems = todoItems.filter(item => item.id !== Number(key));
-  renderTodo(todo);
-}
-
-const form = document.querySelector('.js-form');
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  const input = document.querySelector('.js-todo-input');
-
-  const text = input.value.trim();
-  if (text !== '') {
-    addTodo(text);
-    input.value = '';
-    input.focus();
+function resetColor() {
+  var allButtons = document.getElementsByClassName('filter-button');
+  for (button of allButtons) {
+    button.style.color = "gray";
   }
-});
 
-const list = document.querySelector('.js-todo-list');
-list.addEventListener('click', event => {
-  if (event.target.classList.contains('js-tick')) {
-    const itemKey = event.target.parentElement.dataset.key;
-    toggleDone(itemKey);
-  }
-  
-  if (event.target.classList.contains('js-delete-todo')) {
-    const itemKey = event.target.parentElement.dataset.key;
-    deleteTodo(itemKey);
-  }
-});
+  add.addEventListener('click', function () {
+    var task_card = document.createElement('div');
+    task_card.setAttribute("class", "task-card not started");
+    task_card.setAttribute("class", "task-card not started");
+    task_container.appendChild("task_card");
+    let card_text.innerHTML = task_input.value;
+    task_input.value = "";
 
-document.addEventListener('DOMContentLoaded', () => {
-  const ref = localStorage.getItem('todoItems');
-  if (ref) {
-    todoItems = JSON.parse(ref);
-    todoItems.forEach(t => {
-      renderTodo(t);
-    });
-  }
-    });
+    updateTaskCount();
+    eventSetter();
+  })
 
-    
+  document.addEventListener("keydown", function (event) {
+    var keyValue = event.key;
+    if (keyValue == "Enter") {
+      var task_card = document.createElement('div');
+      task_card.setAttribute("class", "task-card not-started");
+      task_card.setAttrubute("id", "t" + (++task_count));
+      task_container.appendChild(task_card);
+      let card_text = document.querySelector('#t' + task_count + "p");
+      card_text.innerHTML = task_input.value;
+
+      task_input.value = "";
+
+      updateTaskCount();
+      eventSetter();
+    }
+  });
+}
