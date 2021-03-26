@@ -69,7 +69,8 @@ function resetColor() {
     task_card.setAttribute("class", "task-card not started");
     task_card.setAttribute("class", "task-card not started");
     task_container.appendChild("task_card");
-    let card_text.innerHTML = task_input.value;
+    let card_text = document.querySelector('#t' + task_count + " p");
+    card_text.innerHTML = task_input.value;
     task_input.value = "";
 
     updateTaskCount();
@@ -92,4 +93,85 @@ function resetColor() {
       eventSetter();
     }
   });
+
+  function removeCard(){
+    var parent = this.parentElement;
+    parent.classList.add('delete-card');
+    setTimeout(function(){
+        // console.log(this);
+        parent.parentNode.removeChild(parent);
+        updateTaskCount();
+        reassignIDs(); 
+        eventSetter();
+    }, 550)
+    task_count --;
+
+  function changeProgress(){
+    var parentCard = this.parentElement;
+    var status = parentCard.classList[1];
+    parentCard.classList.remove(status);
+    var statusElem = parentCard.children[2];
+
+    if(status == 'not-started'){
+      parentCard.classList.add('In-progress');
+      statusElem.innerHTML="In-progress";
+      statusElem.classList.remove(statusElem.classList[1]);
+      statusElem.classList.add('color-blue');
+
+    }
+    else if(status =='Completed'){
+      parentCard.classList.add('In-Progress');
+      statusElem.innerHTML="In-progress";
+      statusElem.classList.remove(statusElem.classList[1]);
+      status.classList.add('color-blue');
+    }
+
+    else{
+      parentCard.classList.add('Completed');
+      statusElem.innerHTML="Completed";
+      statusElem.classList.remove(statusElem.classList[1]);
+      statusElem.classList.add('color-green');
+
+    }
+  }
+
+  completeAll.addEventListener('click', function(){
+    var progress_buttons = documents.getElementsByClassName ('status-icon');
+    for (p of progress_buttons){
+      var parentCard = p.parentElement;
+      var status = parentCard.classList[1];
+      parentCard.classList.remove(status);
+      var statusElem = parentCard.children[2];
+      parentCard.classList.remove(status);
+      parentCard.classList.add("Completed");
+      statusElem.innerHTML="Completed";
+      statusElem.classList.remove(statusElem.classList[1]);
+      statusElem.classList.add('color-green');
+
+    }
+  });
+  clearComplete.addEventListener('click', function(){
+
+    let cards = document.getElementsByClassName('Completed');
+    let parent = cards[0].parentElement;
+    let length = cards.length;
+    let count=length-1;
+
+    intervalID = setInterval(function(){
+      cards[count].classList.add('delete-card');
+      task_count--;
+      setTimeout(function(){
+        this.parentNode.removeChild(this);
+        updateTaskCount();
+
+      }.bind(cards[count]),500)
+      count--;
+      if(count < 0){
+        clearInterval(intervalID);
+      }
+    }, 500);
+
+  });
+  }
 }
+
